@@ -1,0 +1,110 @@
+a) AIM: Write MongoDB queries to Create and drop databases and collections. 
+In MongoDB, databases and collections are the fundamental storage structures. Databases act as 
+containers for collections, while collections store documents (records). To manage them, MongoDB 
+provides specific commands: 
+1. Creating a Database 
+o MongoDB does not require an explicit CREATE DATABASE command. 
+o A database is created automatically when you switch to it using the use command and 
+insert at least one document. 
+o MongoDB creates a database when you switch to it and insert at least one document. 
+// Switch to (or create) a database 
+use myDatabase 
+Output: 
+switched to db myDatabase 
+2. Drop a Database 
+To delete the currently active database: 
+// Drops the selected database 
+db.dropDatabase() 
+Output: 
+{ "dropped" : "myDatabase", "ok" : 1 } 
+3. Create a Collection 
+Collections are created either automatically when a document is inserted, or explicitly using 
+createCollection(). 
+// Explicitly create a collection 
+db.createCollection("students") 
+Output: 
+{ "ok" : 1 } 
+
+4. Drop a Collection 
+To remove a collection and all its documents: 
+// Drop the "students" collection 
+db.students.drop() 
+Output: 
+true 
+✅ Summary: 
+  Created a new database using use. 
+ use <dbName> → Creates/switches to a database. 
+  Created a collection with db.createCollection(). 
+ db.createCollection("name") → Creates a collection. 
+ Verified collections with show collections. 
+ Dropped a collection using .drop(). 
+ db.collectionName.drop() → Drops a collection. 
+Deleted the entire database using db.dropDatabase(). 
+ db.dropDatabase() → Deletes a database. 
+ Important Commands  
+use mydb                                            
+db.createCollection("c")    -- switch to DB (doesn't create until write)                
+db.c.insertOne({...})       -- create empty collection (explicit)                   
+show dbs                    -- insert → creates collection if needed                        
+show collections            -- list databases (only non-empty ones)                    
+db.c.drop()                 -- list collections in current DB                        
+db.dropDatabase()            -- drop collection                
+db.collection.deleteMany({})  -- drop current database                
+                              -- remove all docs but keep collection
+
+
+b) Write MongoDB queries to work with records using find(), limit(), sort(), createIndex(), 
+aggregate(). 
+In MongoDB, records are stored as documents inside collections. To query and manipulate these records, 
+several methods are commonly used: 
+Step 1: Retrieve Records using find() 
+Task: Fetch all records from the students collection. 
+Query: 
+db.students.find() 
+Expected Output (sample): 
+{ "_id": 1, "name": "Ravi", "department": "CSE" } 
+{ "_id": 2, "name": "Anita", "department": "CSE" } 
+Step 2: Apply Conditions with find() 
+Task: Fetch only students from the CSE department. 
+Query: 
+db.students.find({ "department": "CSE" }) 
+Expected Output (sample): 
+{ "_id": 3, "name": "Sita", "department": "CSE" } 
+{ "_id": 4, "name": "Kiran", "department": "CSE" } 
+Step 3: Limit Results using limit() 
+Task: Display only the first 3 records. 
+Query: 
+db.students.find().limit(3) 
+Expected 
+Output: 
+(Only 3 student documents shown, even if more exist in collection) 
+Step 4: Sort Records using sort() 
+Task: Sort students by name in ascending order. 
+Query: 
+db.students.find().sort({ "name": 1 })
+Expected Output (sample): 
+{ "_id": 7, "name": "Anita", "department": "ECE" } 
+{ "_id": 2, "name": "Kiran", "department": "CSE" } 
+{ "_id": 4, "name": "Ravi", "department": "CSE" } 
+Step 5: Create Index using createIndex() 
+Task: Create an index on the name field to speed up searches. 
+Query: 
+db.students.createIndex({ "name": 1 }) 
+Expected Output: 
+"name_1" 
+Step 6: Aggregate Records using aggregate() 
+Task: Count the number of students in each department. 
+Query: 
+db.students.aggregate([ 
+{ $group: { _id: "$department", total: { $sum: 1 } } } 
+]) 
+Expected Output (sample): 
+{ "_id": "CSE", "total": 25 } 
+{ "_id": "ECE", "total": 18 } 
+✅ Conclusion: 
+✅ Summary of Commands: 
+ find() → Retrieve records. 
+ limit() → Restrict number of results. 
+ sort() → Order results. 
+ createIndex() → Improve query performance. 
+ aggregate() → Perform advanced computations like grouping, counting, summing.
