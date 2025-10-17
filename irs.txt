@@ -1,110 +1,196 @@
-a) AIM: Write MongoDB queries to Create and drop databases and collections. 
-In MongoDB, databases and collections are the fundamental storage structures. Databases act as 
-containers for collections, while collections store documents (records). To manage them, MongoDB 
-provides specific commands: 
-1. Creating a Database 
-o MongoDB does not require an explicit CREATE DATABASE command. 
-o A database is created automatically when you switch to it using the use command and 
-insert at least one document. 
-o MongoDB creates a database when you switch to it and insert at least one document. 
-// Switch to (or create) a database 
-use myDatabase 
-Output: 
-switched to db myDatabase 
-2. Drop a Database 
-To delete the currently active database: 
-// Drops the selected database 
-db.dropDatabase() 
-Output: 
-{ "dropped" : "myDatabase", "ok" : 1 } 
-3. Create a Collection 
-Collections are created either automatically when a document is inserted, or explicitly using 
-createCollection(). 
-// Explicitly create a collection 
-db.createCollection("students") 
-Output: 
-{ "ok" : 1 } 
+Representation of a Text Document in Vector Space Model and Computing Similarity 
+between two documents. 
+AIM: 
+To compute the similarity between two text documents using TF-IDF vectorization and Cosine 
+Similarity in Python. 
+DESCRIPTION: 
+Cosine Similarity – Definition: 
+Cosine Similarity is a metric used to measure the similarity between two non-zero vectors by 
+calculating the cosine of the angle between them. 
+In the context of text documents, it compares two documents represented as TF-IDF vectors and 
+returns a value between 0 and 1: 
+ 1 indicates identical documents (high similarity). 
+ 0 indicates completely different documents. 
+It is widely used in text mining, information retrieval, and natural language processing to 
+compare the semantic similarity between documents. 
+Vector Space Model – Definition: 
+The Vector Space Model is a mathematical model used to represent text documents as vectors in a 
+multi-dimensional space. 
+Each unique term in the entire corpus forms a separate dimension. The values in the vector are 
+typically term weights, such as TF-IDF scores, which indicate the importance of a word in a 
+document. 
+In this model: 
+ Documents are treated as vectors. 
+ Similarity can be computed using mathematical techniques like cosine similarity. 
+This model enables efficient document comparison, ranking, and clustering in text-based 
+applications.
 
-4. Drop a Collection 
-To remove a collection and all its documents: 
-// Drop the "students" collection 
-db.students.drop() 
-Output: 
-true 
-✅ Summary: 
-  Created a new database using use. 
- use <dbName> → Creates/switches to a database. 
-  Created a collection with db.createCollection(). 
- db.createCollection("name") → Creates a collection. 
- Verified collections with show collections. 
- Dropped a collection using .drop(). 
- db.collectionName.drop() → Drops a collection. 
-Deleted the entire database using db.dropDatabase(). 
- db.dropDatabase() → Deletes a database. 
- Important Commands  
-use mydb                                            
-db.createCollection("c")    -- switch to DB (doesn't create until write)                
-db.c.insertOne({...})       -- create empty collection (explicit)                   
-show dbs                    -- insert → creates collection if needed                        
-show collections            -- list databases (only non-empty ones)                    
-db.c.drop()                 -- list collections in current DB                        
-db.dropDatabase()            -- drop collection                
-db.collection.deleteMany({})  -- drop current database                
-                              -- remove all docs but keep collection
+pdf see
 
 
-b) Write MongoDB queries to work with records using find(), limit(), sort(), createIndex(), 
-aggregate(). 
-In MongoDB, records are stored as documents inside collections. To query and manipulate these records, 
-several methods are commonly used: 
-Step 1: Retrieve Records using find() 
-Task: Fetch all records from the students collection. 
-Query: 
-db.students.find() 
-Expected Output (sample): 
-{ "_id": 1, "name": "Ravi", "department": "CSE" } 
-{ "_id": 2, "name": "Anita", "department": "CSE" } 
-Step 2: Apply Conditions with find() 
-Task: Fetch only students from the CSE department. 
-Query: 
-db.students.find({ "department": "CSE" }) 
-Expected Output (sample): 
-{ "_id": 3, "name": "Sita", "department": "CSE" } 
-{ "_id": 4, "name": "Kiran", "department": "CSE" } 
-Step 3: Limit Results using limit() 
-Task: Display only the first 3 records. 
-Query: 
-db.students.find().limit(3) 
-Expected 
-Output: 
-(Only 3 student documents shown, even if more exist in collection) 
-Step 4: Sort Records using sort() 
-Task: Sort students by name in ascending order. 
-Query: 
-db.students.find().sort({ "name": 1 })
-Expected Output (sample): 
-{ "_id": 7, "name": "Anita", "department": "ECE" } 
-{ "_id": 2, "name": "Kiran", "department": "CSE" } 
-{ "_id": 4, "name": "Ravi", "department": "CSE" } 
-Step 5: Create Index using createIndex() 
-Task: Create an index on the name field to speed up searches. 
-Query: 
-db.students.createIndex({ "name": 1 }) 
-Expected Output: 
-"name_1" 
-Step 6: Aggregate Records using aggregate() 
-Task: Count the number of students in each department. 
-Query: 
-db.students.aggregate([ 
-{ $group: { _id: "$department", total: { $sum: 1 } } } 
-]) 
-Expected Output (sample): 
-{ "_id": "CSE", "total": 25 } 
-{ "_id": "ECE", "total": 18 } 
-✅ Conclusion: 
-✅ Summary of Commands: 
- find() → Retrieve records. 
- limit() → Restrict number of results. 
- sort() → Order results. 
- createIndex() → Improve query performance. 
- aggregate() → Perform advanced computations like grouping, counting, summing.
+Interpretation of Result: 
+ 1 → Documents are exactly the same in direction (very similar). 
+ 0 → Documents are completely different (orthogonal vectors). 
+ Closer to 1 → More similar.
+
+
+doc1 = "Machine learning is amazing and fun" 
+doc2 = "Deep learning and machine learning are parts of artificial intelligence" 
+documents = [doc1, doc2] 
+from sklearn.feature_extraction.text import TfidfVectorizer 
+from sklearn.metrics.pairwise import cosine_similarity 
+
+# Create TF-IDF vectorizer 
+
+vectorizer = TfidfVectorizer() 
+
+# Fit and transform the documents 
+
+tfidf_matrix = vectorizer.fit_transform(documents) 
+
+# Display the feature names (terms) 
+
+print("Vocabulary:", vectorizer.get_feature_names_out()) 
+
+# Display TF-IDF matrix 
+
+print("TF-IDF Matrix:\n", tfidf_matrix.toarray()) 
+
+# Compute cosine similarity between the two documents 
+
+similarity = cosine_similarity(tfidf_matrix[0:1], tfidf_matrix[1:2]) 
+print("Cosine Similarity between doc1 and doc2:", similarity[0][0])
+
+OUTPUT:
+Vocabulary: ['amazing' 'and' 'are' 'artificial' 'deep' 'fun' 'intelligence' 'is'
+ 'learning' 'machine' 'of' 'parts']
+TF-IDF Matrix:
+ [[0.47042643 0.33471228 0.         0.         0.         0.47042643
+  0.         0.47042643 0.33471228 0.33471228 0.         0.        ]
+ [0.         0.23667732 0.33264172 0.33264172 0.33264172 0.
+  0.33264172 0.         0.47335464 0.23667732 0.33264172 0.33264172]]
+Cosine Similarity between doc1 and doc2: 0.3168752218840048
+
+
+WEK-8:
+Implement Matrix Decomposition and LSI for a standard dataset.  
+AIM:  
+To implement matrix decomposition and LSI for a standard dataset. 
+DESCRIPTION: 
+Matrix Decomposition 
+ 
+Matrix decomposition (or matrix factorization) is a mathematical technique used to break down a 
+large matrix into smaller, simpler matrices. 
+In text mining, we typically start with a document-term matrix (DTM) or TF-IDF matrix 
+where: 
+o Rows = documents 
+o Columns = terms (words) 
+o Values = frequency or importance of terms in documents 
+Latent Semantic Indexing (LSI) 
+Latent Semantic Indexing (also called Latent Semantic Analysis, LSA) is a technique in information 
+retrieval and natural language processing that uses SVD on the term-document matrix. 
+Idea behind LSI 
+ Natural language has synonyms (different words with similar meaning) and polysemy 
+(same word with multiple meanings). 
+ A raw term-document matrix treats each word independently, which misses semantic 
+relationships. 
+ LSI reduces the matrix dimensions to capture hidden (latent) semantic structures in text. 
+Process of LSI 
+1. Construct a TF-IDF matrix from the dataset. 
+2. Apply Truncated SVD to decompose into lower-rank matrices. 
+3. Represent documents and terms in this reduced semantic space. 
+4. Use cosine similarity or other metrics to find similarity between documents/queries. Singular 
+Value Decomposition (SVD)
+
+- SVD is a mathematical technique that breaks a large matrix into three smaller matrices. 
+- For a document-term matrix (like TF-IDF), SVD helps find patterns/relationships 
+between terms and documents. 
+- It identifies the most important concepts (latent topics) in the data
+
+PROGRAM
+from sklearn.datasets import fetch_20newsgroups 
+from sklearn.feature_extraction.text import TfidfVectorizer  
+from sklearn.decomposition import TruncatedSVD 
+from sklearn.metrics.pairwise import cosine_similarity  
+import numpy as np 
+
+# Step 1: Load dataset (subset for speed) 
+
+categories = ['sci.space', 'rec.sport.hockey', 'comp.graphics'] 
+newsgroups = fetch_20newsgroups(subset='train', categories=categories, remove=('headers', 'footers', 'quotes')) 
+
+# Step 2: TF-IDF Vectorization 
+
+vectorizer = TfidfVectorizer(stop_words='english', max_features=1000)  
+X_tfidf = vectorizer.fit_transform(newsgroups.data) 
+print(f"Original TF-IDF shape: {X_tfidf.shape}") # (docs x terms) 
+
+# Step 3: SVD for LSI (Latent Semantic Indexing) 
+
+k = 100 # number of latent dimensions  
+svd = TruncatedSVD(n_components=k)  
+X_lsi = svd.fit_transform(X_tfidf) 
+print(f"Reduced LSI shape: {X_lsi.shape}") # (docs x k topics) 
+
+# Step 4: Show similarity between some documents 
+
+def show_similar_docs(query_idx, top_n=5):
+    similarities = cosine_similarity([X_lsi[query_idx]], X_lsi)[0]  
+    top_indices = similarities.argsort()[::-1][1:top_n+1] 
+    print(f"\nQuery Document {query_idx}:\n{newsgroups.data[query_idx][:300]}...\n")  
+    print("Top similar documents:") 
+    for i in top_indices: 
+        print(f"\nDoc #{i} (Similarity: {similarities[i]:.3f}):\n{newsgroups.data[i][:300]}...") 
+
+# Example: Show top 5 similar documents to doc #0 
+
+show_similar_docs(query_idx=0, top_n=5) 
+
+Original TF-IDF shape: (1777, 1000)
+Reduced LSI shape: (1777, 100)
+
+Query Document 0:
+
+Mike Vernon is now 3 wins 11 losses plus that All-Star game debacle in
+afternoon games during his career...with another afternoon game with
+Los Angeles next Sunday...has the ABC deal doomed the Flames?...
+
+Top similar documents:
+
+Doc #342 (Similarity: 0.673):
+Dale Hunter ties the game, scoring his third goal of the game
+with 2.7 seconds remaining in regulation.
+
+     You could feel it coming on.
+
+     "Due to contractual agreements, ESPN will be unable to carry
+the rest of this game live, so that we may show you a worthless
+early-season battle between th...
+
+Doc #418 (Similarity: 0.614):
+Was the ABC coverage of the Kings/Flames game supposed to be the
+way it was shown in BC with CBC overriding the ABC coverage?  When I flipped
+to ABC, it was the same commentators, same commercials even.  My question
+is:  Was this the real ABC coverage or did CBC just "black out" the 
+ABC coverage fo...
+
+Doc #1208 (Similarity: 0.600):
+Showing a meaningless (relatively) baseball game over the overtime of
+game that was tied up with less than 3 seconds left on the clock?
+Gimme a break!  Where does ESPN get these BRILLIANT decisions from?...
+
+Doc #1206 (Similarity: 0.596):
+Jesus Christ!!!
+
+The score is now 6-0. The Pens are beating the shit out of the Devils who
+gave up in the middle of the 2nd period. ESPN does something smart. The
+announcer states "well folks this game is getting out of hand. Lets go to
+the Islander/Capitals game." I celebrate as I was actually maki...
+
+Doc #279 (Similarity: 0.591):
+As the subject suggests the Flames were not impressive this afternoon,
+dropping a 6-3 decision to the LA Kings. Most of the Flames neglected
+to show up, especially in their own zone, as the Kings hit at least
+five posts! The Flames best line was probably
+Skrudland-Paslawski-Berube (which tells how b...
+
