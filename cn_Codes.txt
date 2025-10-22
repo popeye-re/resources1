@@ -189,73 +189,54 @@ else:
 print("Error detected in received data.")
 
 8)
-.Program to implement Sliding window protocol for 
-Selective repeat.
- #sender
- import socket
- import random
- import time
- # Create a socket object
- s = socket.socket()
- s.bind(("localhost", 8038))
- s.listen(5)
- print("Waiting for connection...")
+ #Server Program 
+import socket 
+import time 
+import random 
+s = socket.socket()
+ s.bind(("localhost", 8020)) 
+s.listen(5)
  c, adr = s.accept()
- print("From address", str(adr), "connection has been 
-established")
- # Take inputs
- n = int(input("Enter number of frames: "))
- N = int(input("Enter window size: "))
- seq = 1  # Keeps track of the window starting point
- frame = 1  # Frame number to be sent
- # Send first N frames
- for i in range(N):
- print('Frame sent ->', frame)
- c.send(str(frame).encode())
- frame += 1
- time.sleep(2)
- # Simulate sending remaining frames
- while frame <= n:
- t = random.randint(1, 7)  # Simulate ACK timing
-    msg = c.recv(1024).decode()  # Receive ACK
-    if not msg:
-        break  # Client might have closed connection
-    msg = int(msg)
-    print("Frame", msg, "acknowledged.")
-    timer = 5  # Reset timer
+ print("Waiting for connection...")
+ print("connection to " + str(adr) + " established") 
+a = int(input("enter total number of frames: "))
+ x = 0
+ print("sending -->", x)
+ c.send(str(x).encode()) 
+while a > 1:
+    timer = 5 
+    t = random.randint(1, 7) 
+    msg = c.recv(1).decode() 
     if timer > t:
-        # Acknowledgement received
-        print("Acknowledgement received")
-        print('Frame sent ->', frame)
-        c.send(str(frame).encode())
-        seq += 1
-        frame += 1
-        time.sleep(2)
+        time.sleep(3) 
+        print("ack-->", msg) 
+        x = int(msg)
+        print("sending -->", str(x))
+        c.send(str(x).encode()) 
     else:
-        # Acknowledgement lost or not received
-        print("Acknowledgement not received")
-        print('Retransmitting from frame ->', msg)
-        frame = msg  # Reset frame to resend
-        for i in range(N):
-            if frame > n:
-                break
-            print('Frame resent ->', frame)
-            c.send(str(frame).encode())
-            frame += 1
-            time.sleep(2)
+        time.sleep(3) 
+        print("timeout") 
+        print("sending again-->", x) 
+        c.send(str(x).encode()) 
+        a = a + 1  # Resend counts as not successful, so
+ increment back
+    a = a - 1  # Decrease the number of remaining frames
+ # Close connection
  c.close()
  s.close()
-# Receiver
- import socket
- import time
+ #receiver Program 
+import socket
  s = socket.socket()
- s.connect(("localhost", 8038))
+ s.connect(("localhost", 8020))
  while True:
- msg = s.recv(2).decode()
- if not msg:
- break  # Exit the loop if the server closes the 
-connection
- print("Received -->", int(msg))
- s.send(str(msg).encode())  # Send ACK
- time.sleep(1)
+    msg = s.recv(1).decode()
+    print("Received --> ", msg)
+    x = int(msg)
+    
+    if x == 0:
+        x = x + 1
+        s.send(str(x).encode())
+    else:
+        x = x - 1
+        s.send(str(x).encode())
  s.close()
