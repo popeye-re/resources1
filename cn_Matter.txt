@@ -1,3 +1,27 @@
+1)
+Study of Network devices in detail and connect the computers in Local Area Network.
+
+AIM:Study of various network devices in detail All but the most basic of networks require devices to provide connectivity and functionality.Understanding how these networking devices operate and identifying the functions they performare essential skills for any network administrator and requirements for aNetwork+ candidate.Theall networkdevicesareexplained below:
+
+Hubs:
+The hub or network hub connects computers and devices and sends messages and data from anyonedeviceto all the others.Ifthedesktopcomputerwantstosenddatatothelappand it sends amessage to the laptop through the hub,the message willgetsentby the hub to all the computers and devices on the network.They need to do work to figure out that the message is not for them. The message also uses up bandwidth (room) on the network wires or wireless radiowavesandlimits howmuch communication can go on.Hubs arenot usedoften thesedays.
+
+Switch:
+The switch connects the computer network components but it is smart about it. It knows the address of each item and so when the desktop computer wants to talk to the laptop, it only sends the message to the laptop and nothing else. In order to have a small home network that just connects the local equipment all that is really needed is a switch and network cable or the 
+switch can transmit wireless information that is received by wireless receivers that each of the network devices have.
+
+Bridges:
+Bridges are used to divide larger networks into smaller sections. They do this by sitting between two physical network segments and managing the flow of data between the two. By looking at the MAC address of the devices connected to each segment, bridges can elect to forward the data (if they believe that the destination address is on another interface), or block it from crossing (if they can verify that it is on the interface from which it came).
+A bridge functions by blocking or forwarding data, based on the destination MAC address written into each frame of data. If the bridge believes the destination address is on a network other than that from which the data was received, it can forward the data to the other networks to which it is connected. If the address is not on the other side of the bridge, the data is blocked from passing. Bridges “learn” the MAC addresses of devices on connected networks by “listening” to network traffic and recording the network from which the traffic originates. Figure 3 shows a representation of a bridge.
+
+Routers:
+In a common configuration, routers are used to create larger networks by joining two network segments. A router derives its name from the fact that it can route data it receives from one network onto another. When a router receives a packet of data, it reads the header of the packet to determine the destination address. Once it has determined the address, it looks in its routing table to determine whether it knows how to reach the destination and, if it does, it forwards the packet to the next hop on the route. The next hop might be the final destination, or it might be another router. Figure 4 shows, in basic terms, how a router works.
+The routing tables play a very important role in the routing process. They are the means by which the router makes its decisions. For this reason, a routing table needs to be two things. It must be up-to-date, and it must be complete. There are two ways that the router can get the information for the routing table—through static routing or dynamic routing.
+
+Modem:
+Most everyone wants to connect to the internet. A broadband modem is used to take a high speed Internet connection provided by an ISP (Internet Service Provider) and convert the data into a form that your local network can use. The high speed connection can be DSL (Digital Subscriber Line) from a phone company or cable from a cable television provider.
+In order to be reached on the Internet, your computer needs a unique address on the internet. Your ISP will provide this to you as part of your Internet connection package. This address will generally not be fixed which means that they may change your address from time to time. For the vast majority of users, this makes no difference. If you have only one computer and want to connect to the Internet, you strictly speaking don't need a router. You can plug the network cable from the modem directly into the network connection of your computer. However, you are much better off connecting the modem to a router. The ip address your ISP provides will be assigned to the router.
+
 2. i) Write a Program to implement the data 
 link layer framing methods such as --> 
 character stuffing. 
@@ -92,3 +116,4 @@ Examples:
 Case 1: No error in transmission 
 Data = 100100, Generator Polynomial (Key) = x3 + x2 + 1 (1101) 
 Sender Side 
+
