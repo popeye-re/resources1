@@ -1,0 +1,21 @@
+use db
+db.createCollection("students")
+
+db.students.insertMany([
+  {_id:1,name:"david",Department:"cse"},
+  {_id:2,name:"ram",Department:"cse"},
+  {_id:3,name:"mahesh",Department:"aiml"},
+  {_id:4,name:"sai",Department:"aiml"}
+])
+
+db.students.find()
+db.students.find({"Department":"aiml"})
+db.students.find().limit(3)
+db.students.find().sort({"name":1})
+db.students.createIndex({"name":1})
+
+db.students.aggregate([
+  { $group: { _id: "$Department", total: { $sum: 1 } } }
+])
+db.students.drop()
+db.dropDatabase()
