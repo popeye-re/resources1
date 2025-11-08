@@ -61,6 +61,20 @@ onTap: () {
 } 
 }
 
+
+In Flutter, widgets can be categorized into two main types based on their behavior 
+regarding state management: stateful widgets and stateless widgets. 
+Stateless Widgets: 
+Definition: Stateless widgets are widgets that do not have any mutable state. Once created, 
+their properties 
+(configuration) cannot change. 
+Characteristics: 
+They are immutable and lightweight. 
+They only depend on their configuration and the build context provided during 
+construction. Their appearance (UI) is purely a function of their configuration. 
+They are ideal for UI elements that do not change over time, such as static text labels, 
+icons, or simple buttons. 
+
 1. a) Install Flutter and Dart SDK. 
 AIM: To install Flutter and the Dart SDK, you can follow these steps: 
 a) Download Flutter: Visit the Flutter website's Get Started page and download the 
@@ -97,4 +111,5 @@ f) Download Dart SDK (if not bundled with Flutter): Flutter comes with the Dart 
 bundled, so if you've installed Flutter, you should have the Dart SDK as well. 
 However, if you need to install Dart separately, you can download it from the Dart 
 "SDK archive".
+
 
