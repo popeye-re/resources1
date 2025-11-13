@@ -22,72 +22,29 @@ Modem:
 Most everyone wants to connect to the internet. A broadband modem is used to take a high speed Internet connection provided by an ISP (Internet Service Provider) and convert the data into a form that your local network can use. The high speed connection can be DSL (Digital Subscriber Line) from a phone company or cable from a cable television provider.
 In order to be reached on the Internet, your computer needs a unique address on the internet. Your ISP will provide this to you as part of your Internet connection package. This address will generally not be fixed which means that they may change your address from time to time. For the vast majority of users, this makes no difference. If you have only one computer and want to connect to the Internet, you strictly speaking don't need a router. You can plug the network cable from the modem directly into the network connection of your computer. However, you are much better off connecting the modem to a router. The ip address your ISP provides will be assigned to the router.
 
-2. i) Write a Program to implement the data 
-link layer framing methods such as --> 
-character stuffing. 
+2. i) Write a Program to implement the data link layer framing methods such as --> character stuffing. 
 Character Stuffing : 
-Character stuffing is also known as byte stuffing or 
-character-oriented framing and is same as that of bit 
-stuffing but byte stuffing actually operates on bytes 
-whereas bit stuffing operates on bits. In byte stuffing, 
-special byte that is basically known as ESC (Escape 
-Character) that has predefined pattern is generally 
-added to data section of the data stream or frame 
-when there is message or character that has same 
-pattern as that of flag byte. 
-But receiver removes this ESC and keeps data part that 
-causes some problems or issues. In simple words, we 
-can say that character stuffing is addition of 1 
-additional byte if there is presence of ESC or flag in text
+Character stuffing is also known as byte stuffing or character-oriented framing and is same as that of bit stuffing but byte stuffing actually operates on bytes whereas bit stuffing operates on bits. In byte stuffing, special byte that is basically known as ESC (Escape Character) that has predefined pattern is generally added to data section of the data stream or frame 
+when there is message or character that has same pattern as that of flag byte. But receiver removes this ESC and keeps data part that causes some problems or issues. In simple words, we can say that character stuffing is addition of 1 additional byte if there is presence of ESC or flag in text
 
-2. ii) Write a Program to implement the data 
-link layer framing methods such as --> bit 
-stuffing. 
+2. ii) Write a Program to implement the data link layer framing methods such as --> bit stuffing. 
 BitStuffing : 
-Bit stuffing is also known as bit-oriented framing 
-or bit-oriented approach. In bit stuffing, extra 
-bits are being added by network protocol 
-designers to data streams. It is generally 
-insertion or addition of extra bits into 
-transmission unit or message to be transmitted 
-as simple way to provide and give signaling 
-information and data to receiver and to avoid or 
-ignore appearance of unintended or 
-unnecessary control sequences.
+Bit stuffing is also known as bit-oriented framing or bit-oriented approach. In bit stuffing, extra bits are being added by network protocol designers to data streams. It is generally insertion or addition of extra bits into transmission unit or message to be transmitted as simple way to provide and give signaling information and data to receiver and to avoid or 
+ignore appearance of unintended or unnecessary control sequences.
 
 3)
 Write a Program to implement data link layer framing method 
 checksum. 
 Description: 
  
-Checksum is the error detection method used by upper-layer protocols and is 
-considered to be more reliable than Longitudinal Redundancy Check (LRC), 
-Vertical Redundancy Check (VRC), and Cyclic Redundancy Check (CRC). This 
-method uses a Checksum Generator on the sender side and a Checksum 
-Checker on the receiver side.  
-It is a unique number generated from data to verify its integrity. When data 
-is created, a checksum is calculated and sent or saved with it. Later, when 
-accessing the data, the checksum is recalculated. If the two checksums match, the 
-data is likely error free. In this article we will see checksum error detection method 
-in detail. 
-On the Sender side, the data is divided into equal subunits of n bit length by the 
-checksum generator. This bit is generally of 16-bit length. These subunits are then 
-added together using one's complement method. This sum is of n bits. The resultant 
-bit is then complemented. This complemented sum which is called checksum is 
-appended to the end of the original data unit and is then transmitted to the 
-receiver. The Receiver after receiving data + checksum passes it to checksum 
-checker. Checksum checker divides this data unit into various subunits of equal 
-length and adds all these subunits. These subunits also contain checksum as one of 
-the subunits. The resultant bit is then complemented. If the complemented result is 
-zero, it means the data is error-free. If the result is non-zero it means the data 
+Checksum is the error detection method used by upper-layer protocols and is considered to be more reliable than Longitudinal Redundancy Check (LRC), Vertical Redundancy Check (VRC), and Cyclic Redundancy Check (CRC). This method uses a Checksum Generator on the sender side and a Checksum Checker on the receiver side.  
+It is a unique number generated from data to verify its integrity. When data is created, a checksum is calculated and sent or saved with it. Later, when accessing the data, the checksum is recalculated. If the two checksums match, the data is likely error free. In this article we will see checksum error detection method in detail. 
+On the Sender side, the data is divided into equal subunits of n bit length by the checksum generator. This bit is generally of 16-bit length. These subunits are then added together using one's complement method. This sum is of n bits. The resultant bit is then complemented. This complemented sum which is called checksum is appended to the end of the original data unit and is then transmitted to the receiver. The Receiver after receiving data + checksum passes it to checksum checker. Checksum checker divides this data unit into various subunits of equal length and adds all these subunits. These subunits also contain checksum as one of the subunits. The resultant bit is then complemented. If the complemented result is 
+zero, it means the data is error-free. If the result is non-zero it means the data contains an error and Receiver rejects it.
 
-5. Write a Program to implement on a data set of characters the three CRC polynomials 
-CRC 12, CRC 16 and CRC CCITT. 
-Cyclic Redundancy Check  
-Cyclic Redundancy Check or CRC is a method of detecting accidental changes/errors in the 
-communication channel. CRC uses Generator Polynomial which is available on both sender and 
-receiver 
-side. 
+5. Write a Program to implement on a data set of characters the three CRC polynomials CRC 12, CRC 16 and CRC CCITT. 
+Cyclic Redundancy Check:  
+Cyclic Redundancy Check or CRC is a method of detecting accidental changes/errors in the communication channel. CRC uses Generator Polynomial which is available on both sender and receiver side. 
 An example generator polynomial is of the form like x3 + x + 1. This generator polynomial 
 represents key 1011. Another example is x2 + 1 that represents key 101.  
 There are two primary variables in CRC: 
@@ -104,7 +61,7 @@ Checking Error in Transmission (Receiver Side)
 again. 
  If the remainder is 0, then there are not errors, otherwise, the data is faulty and contain 
 transmission errors. 
-Modulo 2 Division 
+Modulo 2 Division :
 The process of modulo-2 binary division is the same as the familiar division process we use for 
 decimal numbers. Just that instead of subtraction, we use XOR here. 
  In each step, a copy of the divisor (or data) is XORed with the k bits of the dividend (or key). 
@@ -130,19 +87,12 @@ ACK is received → then it sends the next frame.
 Timeout occurs → meaning the ACK was lost or frame was corrupted, so the sender retransmits the same frame.
 
 The receiver, upon receiving a frame:
-
 Sends back an ACK,
-
 Discards duplicate frames (if any),
-
 Accepts only the correctly received frame.
-
 This protocol prevents data overflow at the receiver and ensures that no frames are lost or delivered out of order.
-
-Key Features
-
+Key Features:
 Sends one frame at a time.
-
 Ensures reliable and sequential delivery.
-
 Uses ACKs and Timeouts.
+
