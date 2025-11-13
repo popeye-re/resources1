@@ -191,55 +191,112 @@ else:
 print("Error detected in received data.")
 
 8)
- #Server Program 
-import socket 
-import time 
-import random 
+# Server Program
+import socket
+import time
+import random
+
+
+
 s = socket.socket()
- s.bind(("localhost", 8020)) 
+s.bind(("localhost", 8020))
 s.listen(5)
- c, adr = s.accept()
- print("Waiting for connection...")
- print("connection to " + str(adr) + " established") 
+
+print("Waiting for connection...")
+c, adr = s.accept()
+print("connection to " + str(adr) + " established")
+
 a = int(input("enter total number of frames: "))
- x = 0
- print("sending -->", x)
- c.send(str(x).encode()) 
+x = 0
+print("sending -->", x)
+c.send(str(x).encode())
+
 while a > 1:
-    timer = 5 
-    t = random.randint(1, 7) 
-    msg = c.recv(1).decode() 
+    timer = 5
+    t = random.randint(1, 7)
+    msg = c.recv(1).decode()
+    if not msg:
+     
+        break
     if timer > t:
-        time.sleep(3) 
-        print("ack-->", msg) 
+        time.sleep(3)
+        print("ack-->", msg)
         x = int(msg)
         print("sending -->", str(x))
-        c.send(str(x).encode()) 
+        c.send(str(x).encode())
     else:
-        time.sleep(3) 
-        print("timeout") 
-        print("sending again-->", x) 
-        c.send(str(x).encode()) 
-        a = a + 1  # Resend counts as not successful, so
- increment back
-    a = a - 1  # Decrease the number of remaining frames
- # Close connection
- c.close()
- s.close()
- #receiver Program 
+        time.sleep(3)
+        print("timeout")
+        print("sending again-->", x)
+        c.send(str(x).encode())
+        a = a + 1  
+    a = a - 1 
+
+try:
+    c.close()
+except:
+    pass
+s.close()
+
+
+# Receiver Program
 import socket
- s = socket.socket()
- s.connect(("localhost", 8020))
- while True:
-    msg = s.recv(1).decode()
+
+s = socket.socket()
+s.connect(("localhost", 8020))
+
+while True:
+    try:
+        data = s.recv(1)
+    except ConnectionResetError:
+    
+        break
+
+    if not data:
+       
+        break
+
+    msg = data.decode()
     print("Received --> ", msg)
     x = int(msg)
-    
+
     if x == 0:
         x = x + 1
         s.send(str(x).encode())
     else:
         x = x - 1
         s.send(str(x).encode())
- s.close()
 
+s.close()
+
+
+Waiting for connection...
+connection to ('127.0.0.1', 55078) established
+enter total number of frames:  6
+sending --> 0
+ack--> 1
+sending --> 1
+timeout
+sending again--> 1
+timeout
+sending again--> 1
+ack--> 0
+sending --> 0
+ack--> 1
+sending --> 1
+ack--> 0
+sending --> 0
+timeout
+sending again--> 0
+ack--> 1
+sending --> 1
+
+Received -->  0
+Received -->  1
+Received -->  1
+Received -->  1
+Received -->  0
+Received -->  1
+Received -->  0
+Received -->  0
+Received -->  1
