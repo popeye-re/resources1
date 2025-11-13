@@ -117,3 +117,32 @@ Case 1: No error in transmission
 Data = 100100, Generator Polynomial (Key) = x3 + x2 + 1 (1101) 
 Sender Side 
 
+
+8.
+Description for Stop and Wait Protocol Program
+
+The Stop and Wait protocol is one of the simplest flow-control and error-control mechanisms used in data communication. In this protocol, the sender transmits one frame at a time and then waits for an acknowledgment (ACK) from the receiver before sending the next frame. This ensures reliable and orderly delivery of data across the network.
+
+After sending a frame, the sender stops and waits until:
+
+ACK is received → then it sends the next frame.
+
+Timeout occurs → meaning the ACK was lost or frame was corrupted, so the sender retransmits the same frame.
+
+The receiver, upon receiving a frame:
+
+Sends back an ACK,
+
+Discards duplicate frames (if any),
+
+Accepts only the correctly received frame.
+
+This protocol prevents data overflow at the receiver and ensures that no frames are lost or delivered out of order.
+
+Key Features
+
+Sends one frame at a time.
+
+Ensures reliable and sequential delivery.
+
+Uses ACKs and Timeouts.
