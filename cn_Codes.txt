@@ -114,81 +114,72 @@ Enter the string of 0's and 1's as subunit2: 00111001
 Checksum of two subunits: 00011101 
 
 5)
-def xor(a, b): 
-result = '' 
-for i in range(1, len(b)): 
-result += '0' if a[i] == b[i] else '1' 
-return result 
-def divide(dividend, divisor): 
-pick = len(divisor) 
-tmp = dividend[0:pick] 
-while pick < len(dividend): 
-if tmp[0] == '1':
-    tmp = xor(divisor, tmp) + dividend[pick] 
+def xor(x, y):  
+    ans = "" 
+    for i in range(len(y)): 
+        if x[i] == y[i]: 
+            ans += '0' 
         else: 
-            tmp = xor('0' * pick, tmp) + dividend[pick] 
-        pick += 1 
+            ans += '1' 
+    return ans 
  
+def divide(dividend, divisor):  
+    pick = len(divisor) 
+    tmp = dividend[0:pick] 
+    
+    while pick < len(dividend): 
+        if tmp[0] == '1': 
+            tmp = xor(divisor, tmp)
+        else: 
+            tmp = xor('0' * pick, tmp)
+       
+        tmp = tmp[1:] + dividend[pick]
+        pick += 1 
+
+    
     if tmp[0] == '1': 
         tmp = xor(divisor, tmp) 
     else: 
-        tmp = xor('0' * len(divisor), tmp) 
+        tmp = xor('0' * pick, tmp) 
+
+
+    return tmp[1:] 
+
+# Predefined generator polynomials 
+keys = ['1100000001111','11000000000000101', '10001000000100001']     
+print("Choose the CRC")  
+print("1. CRC - 12") 
+print("2. CRC - 16")  
+print("3. CRC - CCITT ") 
  
-    return tmp 
+n = int(input("Enter your choice (1/2/3): ")) 
  
-# -------- User Input Section -------- 
-key = str(input("Enter the CRC polynomial (as a binary string, e.g., 1101): ")).strip() 
-if not key or set(key) - {'0', '1'}: 
-    raise ValueError("Polynomial must be a binary string with only 0s and 1s.") 
+send = input("Enter the string of binary data bits to be sent from the sender: ") 
+rec = input("Enter the string of binary data received at the receiver side: ") 
  
-send = str(input("Enter the binary data to be sent: ")).strip() 
-if not send or set(send) - {'0', '1'}: 
-    raise ValueError("Send data must be a binary string with only 0s and 1s.") 
+key = keys[n - 1] 
  
-rec = str(input("Enter the binary data received: ")).strip() 
-if not rec or set(rec) - {'0', '1'}: 
-    raise ValueError("Received data must be a binary string with only 0s and 1s.") 
- 
-# -------- CRC Encoding -------- 
-l_key = len(key) 
-send_extended = send + '0' * (l_key - 1)
-    tmp = xor(divisor, tmp) + dividend[pick] 
-        else: 
-            tmp = xor('0' * pick, tmp) + dividend[pick] 
-        pick += 1 
- 
-    if tmp[0] == '1': 
-        tmp = xor(divisor, tmp) 
-    else: 
-        tmp = xor('0' * len(divisor), tmp) 
- 
-    return tmp 
- 
-# -------- User Input Section -------- 
-key = str(input("Enter the CRC polynomial (as a binary string, e.g., 1101): ")).strip() 
-if not key or set(key) - {'0', '1'}: 
-    raise ValueError("Polynomial must be a binary string with only 0s and 1s.") 
- 
-send = str(input("Enter the binary data to be sent: ")).strip() 
-if not send or set(send) - {'0', '1'}: 
-    raise ValueError("Send data must be a binary string with only 0s and 1s.") 
- 
-rec = str(input("Enter the binary data received: ")).strip() 
-if not rec or set(rec) - {'0', '1'}: 
-    raise ValueError("Received data must be a binary string with only 0s and 1s.") 
- 
-# -------- CRC Encoding -------- 
-l_key = len(key) 
-send_extended = send + '0' * (l_key - 1)
-remainder = divide(send_extended, key) 
-encoded_data = send + remainder 
-print("\nEncoded data sent:", encoded_data) 
-# -------- CRC Decoding -------- 
-remainder_received = divide(rec, key) 
-if remainder_received == '0' * (l_key - 1): 
-print("No error detected in received data.") 
+length = len(key) 
+send1 = send + '0' * (length - 1)    
+rem = divide(send1, key)             
+
+ans = divide(rec, key)               
+
+if ans == '0' * (len(key) - 1):  
+    print("No error in transmission ") 
 else: 
-print("Error detected in received data.")
+    print("Frame error detected ")
+
+output:
+Choose the CRC
+1. CRC - 12
+2. CRC - 16
+3. CRC - CCITT 
+Enter your choice (1/2/3):  1
+Enter the string of binary data bits to be sent from the sender:  1011
+Enter the string of binary data received at the receiver side:  1011110
+Frame error detected 
+
 
 8)
 # Server Program
@@ -300,3 +291,4 @@ Received -->  1
 Received -->  0
 Received -->  0
 Received -->  1
+
