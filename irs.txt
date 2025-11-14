@@ -25,7 +25,39 @@ In this model:
 This model enables efficient document comparison, ranking, and clustering in text-based 
 applications.
 
-pdf see
+This experiment demonstrates how to measure the similarity between two documents using Natural 
+Language Processing techniques. 
+The program uses TF-IDF (Term Frequency–Inverse Document Frequency) to convert textual 
+data into numerical form, where each word is assigned a weight based on its importance in the 
+document and across documents. 
+Once the documents are represented as TF-IDF vectors, the cosine similarity between them is 
+calculated. Cosine similarity is a metric that quantifies the cosine of the angle between two vectors in 
+a multi-dimensional space. A similarity score close to 1 indicates high similarity, while a score near 0 
+indicates low similarity. 
+Cosine Similarity – Formula: 
+ 
+ Cosine Similarity = cos(θ) = (A · B) / 
+                              (‖A‖ ‖B‖)
+
+Where:
+
+A and B are two vectors (e.g., TF-IDF vectors of two documents).
+
+A · B is the dot product of the vectors.
+
+‖A‖ and ‖B‖ are the magnitudes (lengths) of vectors A and B.
+ 
+Step-by-Step Process to Calculate Cosine Similarity:
+1. Convert documents into vectors
+Use a technique like TF-IDF to convert each document into a numeric vector.
+2. Compute the dot product A · B
+Multiply corresponding values of the two vectors and sum them.
+3. Compute the magnitude of each vector
+‖A‖ = √(a₁² + a₂² + ··· + aₙ²)
+‖B‖ = √(b₁² + b₂² + ··· + bₙ²)
+4. Apply the cosine similarity formula
+Cosine Similarity = (A · B) /
+                   (‖A‖ × ‖B‖)
 
 
 Interpretation of Result: 
@@ -193,4 +225,5 @@ dropping a 6-3 decision to the LA Kings. Most of the Flames neglected
 to show up, especially in their own zone, as the Kings hit at least
 five posts! The Flames best line was probably
 Skrudland-Paslawski-Berube (which tells how b...
+
 
